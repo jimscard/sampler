@@ -33,7 +33,10 @@ def main():
     with open(filepath, 'r', errors='ignore') as csv_in:
         sample = csv_in.read(1024)
         csv_in.seek(0)
-        dialect = csv.Sniffer().sniff(sample)
+        try:
+            dialect = csv.Sniffer().sniff(sample)
+        except csv.Error:
+            dialect = csv.excel
         reader = csv.reader(csv_in, dialect)
         lines = list(reader)  # Read the file into a list of lines
 
